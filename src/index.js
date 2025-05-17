@@ -12,7 +12,7 @@ async function main() {
 
     if (version === "stable") {
       const response = await fetch(
-        "https://api.github.com/repos/matter-labs/foundry-zksync/releases",
+        "https://api.github.com/repos/matter-labs/foundry-zksync/releases/latest",
         {
           headers: {
             Accept: "application/vnd.github+json",
