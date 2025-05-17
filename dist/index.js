@@ -70425,7 +70425,7 @@ async function main() {
         }
       );
       const data = await response.json();
-      version = data[0].tag_name;
+      version = data.tag_name;
     }
 
     // Download the archive containing the binaries
