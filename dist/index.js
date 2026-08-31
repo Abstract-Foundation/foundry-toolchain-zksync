@@ -70472,6 +70472,15 @@ if (require.main === require.cache[eval('__filename')]) {
 const os = __nccwpck_require__(857);
 
 function normalizeVersionName(version) {
+  // The version is interpolated into the release download URL, and the downloaded
+  // archive is extracted and added to PATH. Reject anything that is not a plain tag
+  // name: a value containing "/" or ".." is normalized away by the URL parser and
+  // would point the download at an arbitrary repository, causing the runner to
+  // execute an attacker-supplied binary.
+  if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(version) || version.includes("..")) {
+    throw new Error(`Invalid version input: '${version}'`);
+  }
+
   const normalized = version.replace(/^nightly-[0-9a-f]{40}$/, "nightly");
   
   // Check if the normalized version is a semver and format it accordingly
